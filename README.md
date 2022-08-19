@@ -11,7 +11,7 @@ The client is where the user interacts with the store. Here is where a user can 
 ## Tech
 
 React - single page app
-Socket.IO - used to update usersd actiio ns live on others client side without refreshing the page
+Socket.IO - used to update users actions live on others client side without refreshing the page
 
 ## Wireframes
 
