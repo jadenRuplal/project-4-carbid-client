@@ -34,4 +34,4 @@ https://github.com/jadenRuplal/project-4-carbid-api
 
     ### Stretch
         -Have a filter
-        -potentially to way interaction live
+        -potentially two way interaction live
