@@ -6,7 +6,7 @@ A front end client app for buying cars via bidding or outright purchase
 
 ## About
 
-The client is where the user interacts with the store. Here is where a user can bid battle other for a specific vehicle with live updates
+The client is where the user interacts with the store. Here is where a user can bid battle others for a specific vehicle with live updates
 
 ## Wireframes
 
