@@ -10,6 +10,12 @@ The client is where the user interacts with the store. Here is where a user can 
 
 ## Wireframes
 
+![WIREFRAME](src/resources/images/Wireframe1.png)
+![WIREFRAME](src/resources/images/Wireframe2.png)
+![WIREFRAME](src/resources/images/Wireframe3.png)
+
+## ERD
+
 ![ERD](src/resources/images/Erd.png)
 
 ## API
