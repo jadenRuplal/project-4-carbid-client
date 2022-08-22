@@ -6,6 +6,10 @@ const messages = {
 	signOutSuccess: 'Come back soon!',
 	changePasswordSuccess: 'Password changed successfully!',
 	changePasswordFailure:'Failed to change passwords. Check your old password and try again.',
+	getCarsFailure:'Failed to get cars',
+	removeCarSuccess: 'Car removed',
+	createCarsSuccess:'Car created',
+	createCarFailure:'Failed to create cars',
 }
 
 module.exports = messages

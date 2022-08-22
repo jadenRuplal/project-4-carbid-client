@@ -42,7 +42,7 @@ const SignIn = (props) => {
 					variant: 'success',
 				})
 			)
-			.then(() => navigate('/'))
+			.then(() => navigate('/cars'))
 			.catch((error) => {
                 setEmail('')
                 setPassword('')
@@ -85,6 +85,7 @@ const SignIn = (props) => {
                         Submit
                     </Button>
                 </Form>
+                <a href='/sign-up'>First Time? Press here</a>
             </div>
         </div>
     )

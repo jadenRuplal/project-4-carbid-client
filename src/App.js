@@ -8,10 +8,13 @@ import AutoDismissAlert from './components/shared/AutoDismissAlert/AutoDismissAl
 import Header from './components/shared/Header'
 import RequireAuth from './components/shared/RequireAuth'
 import Home from './components/Home'
+import ShowCar from './components/cars/ShowCar'
 import SignUp from './components/auth/SignUp'
 import SignIn from './components/auth/SignIn'
 import SignOut from './components/auth/SignOut'
 import ChangePassword from './components/auth/ChangePassword'
+import CreateCar from './components/cars/CreateCar'
+import ListingIndex from './components/listings/ListingIndex'
 
 const App = () => {
 
@@ -44,15 +47,19 @@ const App = () => {
 			<Fragment>
 				<Header user={user} />
 				<Routes>
-					<Route path='/' element={<Home msgAlert={msgAlert} user={user} />} />
+				<Route path='/cars' element={<Home msgAlert={msgAlert} user={user} />} />
 					<Route
 						path='/sign-up'
 						element={<SignUp msgAlert={msgAlert} setUser={setUser} />}
 					/>
 					<Route
-						path='/sign-in'
+						path='/'
 						element={<SignIn msgAlert={msgAlert} setUser={setUser} />}
 					/>
+					<Route
+					path="/cars/:id"
+					element={<ShowCar user={user} msgAlert={msgAlert} />}
+				/>
           <Route
             path='/sign-out'
             element={
@@ -68,6 +75,22 @@ const App = () => {
                 <ChangePassword msgAlert={msgAlert} user={user} />
               </RequireAuth>}
           />
+		  <Route
+					path="/addCar"
+					element={
+						<RequireAuth user={user}>
+							<CreateCar msgAlert={msgAlert} user={user} />
+						</RequireAuth>
+					}
+				/>
+				 <Route
+					path="/myCars"
+					element={
+						<RequireAuth user={user}>
+							<ListingIndex msgAlert={msgAlert} user={user} />
+						</RequireAuth>
+					}
+				/>
 				</Routes>
 				{msgAlerts.map((msgAlert) => (
 					<AutoDismissAlert
