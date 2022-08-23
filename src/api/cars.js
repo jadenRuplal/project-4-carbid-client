@@ -33,7 +33,7 @@ export const updateCar = (user, updatedCar) => {
     console.log('this is updatedCar', updatedCar)
 
     return axios({
-        url: `${apiUrl}/cars/${updatedCar._id}`,
+        url: `${apiUrl}/myCars/${updatedCar._id}`,
         method: 'PATCH',
         headers: {
             Authorization: `Token token=${user.token}`,
@@ -58,7 +58,7 @@ export const updateStockCar = (car, updatedStock) => {
 // DELETE
 export const removeCar = (user, carId) => {
     return axios({
-        url: `${apiUrl}/cars/${carId}`,
+        url: `${apiUrl}/myCars/${carId}`,
         method: 'DELETE',
         headers: {
             Authorization: `Token token=${user.token}`,
@@ -66,3 +66,17 @@ export const removeCar = (user, carId) => {
     })
 }
 
+
+
+export const setNewBid = (user, bid, car) => {
+
+
+    return axios({
+        url: `${apiUrl}/cars/bid/${car._id}`,
+        method: 'PATCH',
+        headers: {
+            Authorization: `Token token=${user.token}`,
+        },
+        data: { startingbid: bid , highestbid: user._id}
+    })
+}

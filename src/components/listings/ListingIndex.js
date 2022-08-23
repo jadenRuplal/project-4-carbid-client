@@ -14,7 +14,7 @@ const cardContainerStyle = {
 }
 
 const ListingIndex = (props) => {
-    const [car, setCars] = useState(null)
+    const [cars, setCars] = useState()
     const [error, setError] = useState(false)
 
     const { msgAlert, user } = props
@@ -23,9 +23,11 @@ const ListingIndex = (props) => {
 
     useEffect(() => {
 
-        getMyCars()
-            .then(res => setCars(res.data.car))
-            .catch(err => {
+        getMyCars(user)
+            .then(res => 
+                {console.log(res.data)
+                setCars(res.data.car)})
+        .catch(err => {
                 msgAlert({
                     heading: 'Error Getting carts',
                     message: messages.getCarsFailure,
@@ -42,24 +44,25 @@ const ListingIndex = (props) => {
     }
 
     // If carts haven't loaded yet
-    if (!car) {
+    if (!cars) {
         return <LoadingScreen />
-    } else if (car.length === 0) {
+    } else if (cars.length === 0) {
         return <p>Sorry, looks like you haven't listed anything yet.</p>
     }
-
-    const myCars = car.map((car, index) => (
+    console.log("this is cars", cars)
+    const myCars = cars.map((car, index) => (
         <Card style={{ width: '30%', margin: 5 }} key={index}>
            <Card.Header>
                  Car: {index + 1}
            </Card.Header>
             <Card.Body>
-                <h1>{car.make}   {car.model}</h1>
+            <Link to={`/myCars/${car._id}`}><img src={car.image} alt={car.model}></img></Link>
             </Card.Body>
             <Card.Footer>
             </Card.Footer>
         </Card >
     ))
+    return(myCars)
 
     
 }

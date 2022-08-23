@@ -2,10 +2,14 @@ import apiUrl from '../apiConfig'
 import axios from 'axios'
 
 //READ => INDEX
-export const getMyCars = () => {
+export const getMyCars = (user) => {
+   console.log(user)
     return axios({
         url: `${apiUrl}/myCars`,
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            Authorization: `Token token=${user.token}`,
+        },
     })
 }
 

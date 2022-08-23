@@ -4,27 +4,25 @@ import { useParams, useNavigate } from 'react-router-dom'
 // useParams will allow us to see our parameters
 // useNavigate will allow us to navigate to a specific page
 
-import { Container, Card, Button, Form } from 'react-bootstrap'
+import { Container, Card, Button } from 'react-bootstrap'
 
 import LoadingScreen from '../shared/LoadingScreen'
-import { getOneCar, updateStockCar } from '../../api/cars'
+import { getOneCar, updateCar, removeCar } from '../../api/cars'
 import messages from '../shared/AutoDismissAlert/messages'
 // import EditItemModal from './EditModal'
 import CarForm from '../shared/CarForm.js'
-import StripeCheckout from 'react-stripe-checkout'
-import { setNewBid } from '../../api/cars'
+import EditCarModal from './EditListingModal'
+
 
 // We need to get the item's id from the parameters
 // Then we need to make a request to the api
 // Then we need to display the results in this component
 
 
-const ShowCar = (props) => {
+const MyCar = (props) => {
     const [car, setCar] = useState(null)
     const [editModalShow, setEditModalShow] = useState(false)
     const [updated, setUpdated] = useState(false)
-    const [bid, setBid] = useState(null)
-    const [currentBid, setCurrentBid] = useState(null)
 
     const { id } = useParams()
     const navigate = useNavigate()
@@ -40,14 +38,14 @@ const ShowCar = (props) => {
 
     useEffect(() => {
         getOneCar(id)
-            .then(res => { return setCar(res.data.car), setCurrentBid(res.data.car.startingbid), console.log("this is res.data.car", res.data.car.startingbid) })
+            .then(res => { return setCar(res.data.car), console.log("this is res.data.car", res.data.car) })
             .catch(err => {
                 msgAlert({
                     heading: 'Error getting item',
                     message: messages.getCarsFailure,
                     variant: 'danger'
                 })
-                navigate('/cars')
+                navigate('/myCars')
                 //navigate back to the home page if there's an error fetching
             })
     }, [])
@@ -76,7 +74,27 @@ const ShowCar = (props) => {
     //         })
     // }
 
-
+    const removeTheCar = () => {
+        removeCar(user, car._id)
+            // on success send a success message
+            .then(() => {
+                msgAlert({
+                    heading: 'Success',
+                    message: messages.removeCarSuccess,
+                    variant: 'success'
+                })
+            })
+            // then navigate to index
+            .then(() => { navigate('/myCars') })
+            // on failure send a failure message
+            .catch(err => {
+                msgAlert({
+                    heading: 'Error removing item',
+                    message: messages.removeCarsFailure,
+                    variant: 'danger'
+                })
+            })
+    }
     
     if (!car) {
         return <LoadingScreen />
@@ -92,52 +110,19 @@ const ShowCar = (props) => {
 
 
 
-    const changeQuantity = (car) => {
-        // e.preventDefault()
-        const updatedStock = car.stock - 1
-        updateStockCar(car, updatedStock)
-            .then(console.log('this is car and updated stock', car, updatedStock))
-            // .then(() => triggerRefresh())
-            .catch(() =>
-                console.log('works')
-            )
-    }
+    // const changeQuantity = (car) => {
+    //     // e.preventDefault()
+    //     const updatedStock = car.stock - 1
+    //     updateStockCar(car, updatedStock)
+    //         .then(console.log('this is car and updated stock', car, updatedStock))
+    //         // .then(() => triggerRefresh())
+    //         .catch(() =>
+    //             console.log('works')
+    //         )
+    // }
 
 
-    function handleToken(token, addresses) {
-        changeQuantity(car)
-        if (token) {
-            msgAlert({
-                heading: 'Success',
-                message: messages.paymentSuccessful,
-                variant: 'success'
-            })
-            setTimeout(() => {
-                navigate('/cars')
-            }, 3000)
-        }
-    }
 
-    const handleBid = (e) => {
-        // e equals the event
-        e.preventDefault()
-        
-        setNewBid(user, bid, car)
-        // send a success message to the user
-        .then((data) => {
-            console.log('this is data.startingbid', data.data.startingbid)
-           setCurrentBid(data.data.startingbid)
-            msgAlert({
-                heading: 'Yes!',
-                message: messages.createBidSuccess,
-                variant: 'success'
-            })
-        })
-    }
-
-    const handleChange = (e) => {
-        setBid(e.target.value)
-    }
 
     // function availability() {
     //     if (item.stock = 0) {
@@ -162,52 +147,26 @@ const ShowCar = (props) => {
                             <p style={{ fontSize: '20px', fontWeight: 'bold' }} > Description: {car.description} </p>
                             <p style={{ fontSize: '20px', fontWeight: 'bold' }} > Max price: {car.buyout} </p>
                             <p style={{ fontSize: '20px', fontWeight: 'bold' }} > Year: {car.year} </p>
-                            <p style={{ fontSize: '20px', fontWeight: 'bold' }} > Current Bid: {currentBid} </p>
                         </Card.Text>
                     </Card.Body>
                     <Card.Footer>
-                        
-                    <Form onSubmit={handleBid}>
-                         <Form.Label htmlFor="startingbid">Place Bid</Form.Label>
-                        <Form.Control
-                            placeholder="Enter your bid"
-                            type="number"
-                            name="startingbid"
-                            id="startingbid"
-                            value={bid}
-                            onChange={handleChange}
-                        />
-                        <Button type="submit">Submit</Button>
-                    </Form>
+                                 <Button onClick={() => setEditModalShow(true)}
+                                    className="m-2"
+                                    variant="warning"
+                                 >
+                                    Edit car
+                                </Button>
 
-
-                        {
-
-                            <>
-                
-                                {/* <Button onClick={() => addToTheCart()} */}
-                                {/* // className="m-2">
-                                //     Add To Cart
-                                // </Button> */}
-                                {(car.stock > 0) ?
-                                    (<StripeCheckout
-                                        stripeKey="pk_test_51LTtnNDtEn7Sojm7iPaYEA0jfQj07zxKZ92tb1ZrdFNZuI7ecXBKHuwGmIKi6JjNwE9pAPE8b23SN6KemYzLrNb600prbjUyDe"
-                                        token={handleToken}
-                                        billingAddress
-                                        shippingAddress
-                                        amount={car.buyout * 100}
-                                        label="Purchase Item"
-                                        image={car.image}
-                                        currency="USD"
-                                    />) : (<p> Sold out</p>)}
-                            </>
-
-
-                        }
+                                <Button onClick={() => removeTheCar()}
+                                    className="m-2"
+                                    variant="warning"
+                                 >
+                                    Delete listing
+                                </Button>
                     </Card.Footer>
                 </Card>
 
-     {/* <form action="comments" method="POST">
+     <form action="comments" method="POST">
          <fieldset>
              <legend>Add comment</legend>
              <label class="form-label">Comment: </label>
@@ -219,22 +178,9 @@ const ShowCar = (props) => {
              />
         </fieldset>
         <input type="submit" class="btn btn-success" value="Add comment" />
-    </form> */}
-
-    <Form onSubmit={handleBid}>
-            <label>Comment</label>
-                <Form.Control
-                    placeholder="Leave a Comment"
-                    name="bid"
-                    id="bid"
-                    value={car.comments}
-                    onChange={handleChange}
-                />
-            <Button type="submit">Submit</Button>
-    </Form>
-
+    </form>
             </Container>
-            {/* <EditCarModal
+            <EditCarModal
                 user={user}
                 car={car}
                 show={editModalShow}
@@ -242,11 +188,11 @@ const ShowCar = (props) => {
                 msgAlert={msgAlert}
                 triggerRefresh={() => setUpdated(prev => !prev)}
                 handleClose={() => setEditModalShow(false)}
-            /> */}
+            />
         </>
     )
 }
 
 
 
-export default ShowCar
+export default MyCar

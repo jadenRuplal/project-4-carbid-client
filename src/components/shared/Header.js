@@ -18,6 +18,11 @@ const authenticatedOptions = (
 				My listings
 			</Link>
 		</Nav.Item>
+		<Nav.Link>
+			<Link to='/bids' style={linkStyle}>
+				My bid
+			</Link>
+		</Nav.Link>
 		<Nav.Item>
 			<Link to='addCar' style={linkStyle}>
 				Add listing

@@ -15,6 +15,7 @@ import SignOut from './components/auth/SignOut'
 import ChangePassword from './components/auth/ChangePassword'
 import CreateCar from './components/cars/CreateCar'
 import ListingIndex from './components/listings/ListingIndex'
+import ShowListing from './components/listings/ShowListing'
 
 const App = () => {
 
@@ -88,6 +89,14 @@ const App = () => {
 					element={
 						<RequireAuth user={user}>
 							<ListingIndex msgAlert={msgAlert} user={user} />
+						</RequireAuth>
+					}
+				/>
+				 <Route
+					path="/myCars/:id"
+					element={
+						<RequireAuth user={user}>
+							<ShowListing msgAlert={msgAlert} user={user} />
 						</RequireAuth>
 					}
 				/>

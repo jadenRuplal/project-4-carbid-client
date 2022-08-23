@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import LoadingScreen from '../shared/LoadingScreen'
 import { getAllCars } from '../../api/cars'
 import messages from '../shared/AutoDismissAlert/messages'
+import Countdown from 'react-countdown'
 
 //card container style
 const cardContainerStyle = {
@@ -63,6 +64,7 @@ const CarIndex = (props) => {
                         buynow: {car.buyout}
                     </p>
                 </div>
+                <div>Time left: <Countdown date={Date.now() + 100000}/></div>
             </Card.Footer>
         </Card >
     ))

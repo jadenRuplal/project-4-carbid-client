@@ -59,7 +59,7 @@ const CreateCar = (props) => {
 
         createCar(user, car)
             // if we're successful, navigate to the show page for the new car
-            .then(res => { navigate(`/cars/${res.data.car.id}`)})
+            .then(res => { navigate(`/cars`)})
             // send a success message to the user
             .then(() => {
                 msgAlert({
