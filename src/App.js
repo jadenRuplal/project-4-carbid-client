@@ -16,6 +16,7 @@ import ChangePassword from './components/auth/ChangePassword'
 import CreateCar from './components/cars/CreateCar'
 import ListingIndex from './components/listings/ListingIndex'
 import ShowListing from './components/listings/ShowListing'
+import BidIndex from './components/bids/BidIndex'
 
 const App = () => {
 
@@ -97,6 +98,14 @@ const App = () => {
 					element={
 						<RequireAuth user={user}>
 							<ShowListing msgAlert={msgAlert} user={user} />
+						</RequireAuth>
+					}
+				/>
+				 <Route
+					path="/bids"
+					element={
+						<RequireAuth user={user}>
+							<BidIndex msgAlert={msgAlert} user={user} />
 						</RequireAuth>
 					}
 				/>

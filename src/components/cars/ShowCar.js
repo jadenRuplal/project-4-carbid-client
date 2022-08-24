@@ -13,6 +13,8 @@ import messages from '../shared/AutoDismissAlert/messages'
 import CarForm from '../shared/CarForm.js'
 import StripeCheckout from 'react-stripe-checkout'
 import { setNewBid } from '../../api/cars'
+import { createComment } from '../../api/comments'
+import CardHeader from 'react-bootstrap/esm/CardHeader'
 
 // We need to get the item's id from the parameters
 // Then we need to make a request to the api
@@ -25,6 +27,7 @@ const ShowCar = (props) => {
     const [updated, setUpdated] = useState(false)
     const [bid, setBid] = useState(null)
     const [currentBid, setCurrentBid] = useState(null)
+    const [comment, setComments] = useState(null)
 
     const { id } = useParams()
     const navigate = useNavigate()
@@ -40,7 +43,7 @@ const ShowCar = (props) => {
 
     useEffect(() => {
         getOneCar(id)
-            .then(res => { return setCar(res.data.car), setCurrentBid(res.data.car.startingbid), console.log("this is res.data.car", res.data.car.startingbid) })
+            .then(res => { return setCar(res.data.car), setCurrentBid(res.data.car.startingbid), console.log("this is res.data.car", res.data.car) })
             .catch(err => {
                 msgAlert({
                     heading: 'Error getting item',
@@ -135,6 +138,25 @@ const ShowCar = (props) => {
         })
     }
 
+    const handleComments = (e) => {
+        // e equals the event
+        e.preventDefault()
+        
+        createComment(user, comment, car)
+        // send a success message to the user
+        .then((data) => {
+            msgAlert({
+                heading: 'Yes!',
+                message: messages.createCommentSuccess,
+                variant: 'success'
+            })
+        })
+    }
+
+    const handleCommentChange = (e) => {
+        setComments(e.target.value)
+    }
+
     const handleChange = (e) => {
         setBid(e.target.value)
     }
@@ -148,6 +170,20 @@ const ShowCar = (props) => {
     //         )
     //     }
     // }
+
+
+    const carComments = car.comments.map((comment, index) => (
+       <Container className="fluid">
+       <Card key={index}>
+          <Card.Header>{comment.email}</Card.Header>
+            <Card.Body>
+                {comment.note}
+            </Card.Body>
+            <Card.Footer>
+            </Card.Footer>
+        </Card >
+        </Container>
+    ))
 
 
     return (
@@ -220,30 +256,24 @@ const ShowCar = (props) => {
         </fieldset>
         <input type="submit" class="btn btn-success" value="Add comment" />
     </form> */}
-
-    <Form onSubmit={handleBid}>
+    <Form onSubmit={handleComments}>
             <label>Comment</label>
                 <Form.Control
                     placeholder="Leave a Comment"
                     name="bid"
                     id="bid"
-                    value={car.comments}
-                    onChange={handleChange}
+                    value={comment}
+                    onChange={handleCommentChange}
                 />
             <Button type="submit">Submit</Button>
     </Form>
 
             </Container>
-            {/* <EditCarModal
-                user={user}
-                car={car}
-                show={editModalShow}
-                updateCar={updateCar}
-                msgAlert={msgAlert}
-                triggerRefresh={() => setUpdated(prev => !prev)}
-                handleClose={() => setEditModalShow(false)}
-            /> */}
+            
+            {carComments}
         </>
+       
+
     )
 }
 

@@ -3,13 +3,16 @@ import { Modal } from 'react-bootstrap'
 import CarForm from '../shared/CarForm'
 
 import { updateCarSuccess, updateCarFailure } from '../shared/AutoDismissAlert/messages'
+import { Navigate } from 'react-router'
+import { useNavigate} from 'react-router'
+
 
 const EditCarModal = (props) => {
     const {
         user, show, handleClose,
         updateCar, msgAlert, triggerRefresh
     } = props
-
+    const navigate = useNavigate()
     const [car, setCar] = useState(props.car)
 
     console.log('car in edit modal', car)
@@ -61,7 +64,7 @@ const EditCarModal = (props) => {
                 })
             })
             // if everything is successful, we need to trigger our refresh for the show page
-            .then(() => triggerRefresh())
+            .then(() => navigate('/myCars'))
             // if there is an error, tell the user about it
             .catch(() =>
                 msgAlert({

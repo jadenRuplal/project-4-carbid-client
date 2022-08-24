@@ -5,7 +5,6 @@ import { useParams, useNavigate } from 'react-router-dom'
 // useNavigate will allow us to navigate to a specific page
 
 import { Container, Card, Button } from 'react-bootstrap'
-
 import LoadingScreen from '../shared/LoadingScreen'
 import { getOneCar, updateCar, removeCar } from '../../api/cars'
 import messages from '../shared/AutoDismissAlert/messages'
