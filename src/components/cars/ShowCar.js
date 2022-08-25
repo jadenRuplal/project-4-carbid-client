@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 // useParams will allow us to see our parameters
 // useNavigate will allow us to navigate to a specific page
 
-import { Container, Card, Button, Form } from 'react-bootstrap'
+import { Container, Card, Button, Form, Carousel } from 'react-bootstrap'
 
 import LoadingScreen from '../shared/LoadingScreen'
 import { getOneCar, updateStockCar } from '../../api/cars'
@@ -13,8 +13,12 @@ import messages from '../shared/AutoDismissAlert/messages'
 import CarForm from '../shared/CarForm.js'
 import StripeCheckout from 'react-stripe-checkout'
 import { setNewBid } from '../../api/cars'
-import { createComment } from '../../api/comments'
+import { createComment, deleteComment } from '../../api/comments'
 import CardHeader from 'react-bootstrap/esm/CardHeader'
+import io from 'socket.io-client'
+import { all } from 'q'
+
+const socket = io.connect("http://localhost:8000")
 
 // We need to get the item's id from the parameters
 // Then we need to make a request to the api
@@ -28,6 +32,8 @@ const ShowCar = (props) => {
     const [bid, setBid] = useState(null)
     const [currentBid, setCurrentBid] = useState(null)
     const [comment, setComments] = useState(null)
+    const [isConnected, setIsConnected] = useState(socket.connected);
+    const [allComments, setAllComments] = useState([])
 
     const { id } = useParams()
     const navigate = useNavigate()
@@ -39,11 +45,19 @@ const ShowCar = (props) => {
     console.log('the item in showItem', car)
     // destructuring to get the id value from our route parameters
 
-
+    const setupStuff = (res) => {
+        console.log("this is res.data.car", res.data.car.comments) 
+        setCar(res.data.car)
+        setCurrentBid(res.data.car.startingbid)
+        setAllComments(res.data.car.comments)
+    }
 
     useEffect(() => {
         getOneCar(id)
-            .then(res => { return setCar(res.data.car), setCurrentBid(res.data.car.startingbid), console.log("this is res.data.car", res.data.car) })
+            .then(res => { 
+                setupStuff(res)
+                console.log('this is after get one car')
+            })
             .catch(err => {
                 msgAlert({
                     heading: 'Error getting item',
@@ -53,7 +67,38 @@ const ShowCar = (props) => {
                 navigate('/cars')
                 //navigate back to the home page if there's an error fetching
             })
-    }, [])
+
+            
+        socket.on('connect', () => {
+                setIsConnected(true)
+              })
+        socket.on('disconnect', () => {
+                setIsConnected(false)
+              })
+              
+        socket.on('recieve_message', (data) => {
+            console.log('line 80 all comments', allComments)
+            setAllComments((prevAllComments) => {
+                console.log('inside set function', prevAllComments)
+                return [...prevAllComments, data]
+            })
+
+        
+        })
+        socket.on('recieve_bid', (newBid) => {
+            console.log('new bid', newBid)
+            setCurrentBid(newBid.bid)
+        })
+            
+        return () => {
+                socket.off('connect')
+                socket.off('disconnect')
+                socket.off('pong')
+              }
+            
+    }, [socket])
+
+    console.log('allComments after setting from db', allComments)
 
     // here we'll declare a function that runs which will remove the item
     // this function's promise chain should send a message, and then go somewhere
@@ -125,6 +170,7 @@ const ShowCar = (props) => {
         // e equals the event
         e.preventDefault()
         
+        if(bid > car.startingbid && bid < car.buyout) {
         setNewBid(user, bid, car)
         // send a success message to the user
         .then((data) => {
@@ -135,7 +181,13 @@ const ShowCar = (props) => {
                 message: messages.createBidSuccess,
                 variant: 'success'
             })
-        })
+        })} else {
+            msgAlert({
+                heading: 'No!',
+                message: messages.addBidFail,
+                variant: 'danger'
+            })
+        }
     }
 
     const handleComments = (e) => {
@@ -170,9 +222,15 @@ const ShowCar = (props) => {
     //         )
     //     }
     // }
+    const sendComment = () => {
+        socket.emit("send_message", {note: comment, email: user.email})
+    }
 
+    const sendBid = () => {
+        socket.emit("send_bid", {bid})
+    }
 
-    const carComments = car.comments.map((comment, index) => (
+    const carComments = allComments?.map((comment, index) => (
        <Container className="fluid">
        <Card key={index}>
           <Card.Header>{comment.email}</Card.Header>
@@ -180,6 +238,11 @@ const ShowCar = (props) => {
                 {comment.note}
             </Card.Body>
             <Card.Footer>
+            {(user.email === comment.email ) ?
+                                (<Button onClick={() => deleteComment(user, comment._id, car._id)}
+                                className="m-2">
+                                    Delete
+                                </Button>) : null }
             </Card.Footer>
         </Card >
         </Container>
@@ -213,7 +276,7 @@ const ShowCar = (props) => {
                             value={bid}
                             onChange={handleChange}
                         />
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" onClick={sendBid}>Submit</Button>
                     </Form>
 
 
@@ -265,7 +328,7 @@ const ShowCar = (props) => {
                     value={comment}
                     onChange={handleCommentChange}
                 />
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onClick={sendComment}>Submit</Button>
     </Form>
 
             </Container>

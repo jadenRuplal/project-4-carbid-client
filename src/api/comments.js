@@ -36,13 +36,13 @@ export const createComment = (user, newComment, car) => {
 // }
 
 // DELETE
-// export const removeComments = (user, carId) => {
-//     return axios({
-//         url: `${apiUrl}/cars/${carId}`,
-//         method: 'DELETE',
-//         headers: {
-//             Authorization: `Token token=${user.token}`,
-//         }
-//     })
-// }
+export const deleteComment = (user, commentId, carId) => {
+    return axios({
+        url: `${apiUrl}/cars/${carId}/${commentId}`,
+        method: 'DELETE',
+        headers: {
+            Authorization: `Token token=${user.token}`,
+        }
+    })
+}
 

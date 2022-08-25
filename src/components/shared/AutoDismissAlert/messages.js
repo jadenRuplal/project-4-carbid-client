@@ -10,7 +10,8 @@ const messages = {
 	removeCarSuccess: 'Car removed',
 	createCarsSuccess:'Car created',
 	createCarFailure:'Failed to create cars',
-	createBidSuccess: "Bid successfully made"
+	createBidSuccess: "Bid successfully made",
+	addBidFail: "Bid is either to low or to high"
 }
 
 module.exports = messages
