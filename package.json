@@ -1,6 +1,7 @@
 {
   "name": "react-auth-boilerplate",
   "version": "0.1.0",
+  "proxy": "https://vermillion-bombolone-23b269.netlify.app",
   "engines": {
     "node": "16.14.0"
   },
