@@ -63,7 +63,7 @@ const CarIndex = (props) => {
                     </div>
                    
                 </div>
-                <div>Time left: <Countdown date={Date.now() + 100000}/></div>
+                <div>Time left: <Countdown date={Date.now() + 91000000}/></div>
             </Card.Footer>
         </Card >
     ))
