@@ -101,29 +101,7 @@ const ShowCar = (props) => {
 
     console.log('allComments after setting from db', allComments)
 
-    // here we'll declare a function that runs which will remove the item
-    // this function's promise chain should send a message, and then go somewhere
-    // const removeTheCar = () => {
-    //     removeCar(user, car._id)
-    //         // on success send a success message
-    //         .then(() => {
-    //             msgAlert({
-    //                 heading: 'Success',
-    //                 message: messages.removeCarSuccess,
-    //                 variant: 'success'
-    //             })
-    //         })
-    //         // then navigate to index
-    //         .then(() => { navigate('/cars') })
-    //         // on failure send a failure message
-    //         .catch(err => {
-    //             msgAlert({
-    //                 heading: 'Error removing item',
-    //                 message: messages.removeCarFailure,
-    //                 variant: 'danger'
-    //             })
-    //         })
-    // }
+    
 
 
     
@@ -131,13 +109,6 @@ const ShowCar = (props) => {
         return <LoadingScreen />
     }
 
-    //changeQuantity() declaring callback function for setting state of the item quantity
-    // will need the item to change the quantity of and the setter function passed through from props
-    // call function before the set timeout and navigate to change quantity in state
-    // do I want to make an api call to change the data in the db?
-    // what kind of data do i need from the db?
-    // how will i make this request from the db?
-    // should this api call be inside this callback function or be a seperate function that preceeds it
 
 
 
@@ -267,6 +238,7 @@ const ShowCar = (props) => {
                     </Card.Body>
                     <Card.Footer>
                         
+                    {(car.stock > 0) ?
                     <Form onSubmit={handleBid}>
                          <Form.Label htmlFor="startingbid">Place Bid</Form.Label>
                         <Form.Control
@@ -279,7 +251,7 @@ const ShowCar = (props) => {
                         />
                         <Button type="submit" onClick={sendBid}>Submit</Button>
                     </Form>
-
+                : <></>}
 
                         {
 
@@ -299,7 +271,7 @@ const ShowCar = (props) => {
                                         label="Purchase Item"
                                         image={car.image}
                                         currency="USD"
-                                    />) : (<p> Sold out</p>)}
+                                    />) : (<p style={{fontSize:'40px'}}> Sold out</p>)}
                             </>
 
 
