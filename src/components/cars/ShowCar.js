@@ -17,6 +17,7 @@ import { createComment, deleteComment } from '../../api/comments'
 import CardHeader from 'react-bootstrap/esm/CardHeader'
 import io from 'socket.io-client'
 import { all } from 'q'
+import '../../css/index.css'
 
 const socket = io.connect("http://localhost:8000")
 

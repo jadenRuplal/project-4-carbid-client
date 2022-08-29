@@ -52,14 +52,12 @@ const ListingIndex = (props) => {
     console.log("this is cars", cars)
     const myCars = cars.map((car, index) => (
         <Card style={{ width: '30%', margin: 5 }} key={index}>
-           <Card.Header>
-                 Car: {index + 1}
+           <Card.Header style={{textAlign:'center'}}>
+                 {car.make} {car.model}
            </Card.Header>
             <Card.Body>
             <Link to={`/myCars/${car._id}`}><img src={car.image} alt={car.model}></img></Link>
             </Card.Body>
-            <Card.Footer>
-            </Card.Footer>
         </Card >
     ))
     return(myCars)

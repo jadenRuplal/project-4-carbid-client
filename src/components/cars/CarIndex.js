@@ -57,12 +57,10 @@ const CarIndex = (props) => {
             </Card.Body>
             <Card.Footer>
                 <div>
-                    <p>
-                        bid: ${car.startingbid}
-                    </p>
-                    <p>
-                        buynow: {car.buyout}
-                    </p>
+                    <div>
+                        Bid: ${car.startingbid} Buynow: {car.buyout}
+                    </div>
+                   
                 </div>
                 <div>Time left: <Countdown date={Date.now() + 100000}/></div>
             </Card.Footer>

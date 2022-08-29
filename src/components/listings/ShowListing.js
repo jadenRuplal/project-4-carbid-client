@@ -165,19 +165,7 @@ const MyCar = (props) => {
                     </Card.Footer>
                 </Card>
 
-     <form action="comments" method="POST">
-         <fieldset>
-             <legend>Add comment</legend>
-             <label class="form-label">Comment: </label>
-             <input
-                  type="text"
-                 class="form-control"
-                 name="note"
-                 placeholder="Enter comment here"
-             />
-        </fieldset>
-        <input type="submit" class="btn btn-success" value="Add comment" />
-    </form>
+     
             </Container>
             <EditCarModal
                 user={user}
