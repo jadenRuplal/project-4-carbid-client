@@ -56,7 +56,7 @@ const ListingIndex = (props) => {
                  {car.make} {car.model}
            </Card.Header>
             <Card.Body>
-            <Link to={`/myCars/${car._id}`}><img src={car.image} alt={car.model}></img></Link>
+            <Link to={`/myCars/${car._id}`}><img src={car.image} alt={car.model} class="image"></img></Link>
             </Card.Body>
         </Card >
     ))

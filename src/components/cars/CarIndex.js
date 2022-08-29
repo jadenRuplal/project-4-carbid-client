@@ -6,6 +6,7 @@ import LoadingScreen from '../shared/LoadingScreen'
 import { getAllCars } from '../../api/cars'
 import messages from '../shared/AutoDismissAlert/messages'
 import Countdown from 'react-countdown'
+import '../../css/index.css'
 
 //card container style
 const cardContainerStyle = {
@@ -52,8 +53,8 @@ const CarIndex = (props) => {
     const carCards = cars.map((car, index) => (
         <Card style={{ width: '30%', margin: 5 }} key={index}>
             <Link to={`/cars/${car._id}`} style={{ textDecoration: 'none', color: 'black'}}><Card.Header>{car.year}  {car.make}  {car.model}</Card.Header></Link>
-            <Card.Body>
-                <Link to={`/cars/${car._id}`}><img src={car.image} alt={car.model}></img></Link>
+            <Card.Body >
+                <Link to={`/cars/${car._id}`}><img src={car.image} alt={car.model} class="image"></img></Link>
             </Card.Body>
             <Card.Footer>
                 <div>
