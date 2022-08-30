@@ -6,6 +6,11 @@ A front end client app for buying cars via bidding or outright purchase
 
 Clone the code off of Github into a repository. Then install all dependencies to prevent errors.
 
+commands:
+git clone https://github.com/jadenRuplal/project-4-carbid-client.git
+npm install (add all names from dependency in package.json)
+npm start (after install)
+
 ## About
 
 The client is where the user interacts with the store. Here is where a user can bid battle others for a specific vehicle with live updates
