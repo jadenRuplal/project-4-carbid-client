@@ -4,6 +4,8 @@ A front end client app for buying cars via bidding or outright purchase
 
 ## Installation
 
+Clone the code off of Github into a repository. Then install all dependencies to prevent errors.
+
 ## About
 
 The client is where the user interacts with the store. Here is where a user can bid battle others for a specific vehicle with live updates
@@ -41,6 +43,7 @@ https://github.com/jadenRuplal/project-4-carbid-api
           - bid against others live
           - see all the listings I have won
           - comment on specific listings
+          - see updated
           - delete my comments
 
     ### Stretch
