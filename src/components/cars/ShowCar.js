@@ -9,7 +9,7 @@ import { Container, Card, Button, Form, Carousel } from 'react-bootstrap'
 import LoadingScreen from '../shared/LoadingScreen'
 import { getOneCar, updateStockCar } from '../../api/cars'
 import messages from '../shared/AutoDismissAlert/messages'
-// import EditItemModal from './EditModal'
+// import EditBidModal from './EditModal'
 import CarForm from '../shared/CarForm.js'
 import StripeCheckout from 'react-stripe-checkout'
 import { setNewBid } from '../../api/cars'
@@ -21,7 +21,7 @@ import '../../css/index.css'
 
 const socket = io.connect("http://localhost:8000")
 
-// We need to get the item's id from the parameters
+// We need to get the bid's id from the parameters
 // Then we need to make a request to the api
 // Then we need to display the results in this component
 
@@ -43,7 +43,7 @@ const ShowCar = (props) => {
 
     const { user, msgAlert, updatedStockCar, triggerRefresh } = props
     console.log('user in props', user)
-    console.log('the item in showItem', car)
+    console.log('the bid in showBid', car)
     // destructuring to get the id value from our route parameters
 
     const setupStuff = (res) => {
@@ -61,7 +61,7 @@ const ShowCar = (props) => {
             })
             .catch(err => {
                 msgAlert({
-                    heading: 'Error getting item',
+                    heading: 'Error getting bid',
                     message: messages.getCarsFailure,
                     variant: 'danger'
                 })
@@ -185,15 +185,7 @@ const ShowCar = (props) => {
         setBid(e.target.value)
     }
 
-    // function availability() {
-    //     if (item.stock = 0) {
-    //         return (<p>Out of Stock Sorry</p>)
-    //     } else {
-    //         return (
-    //             <p>hi</p>
-    //         )
-    //     }
-    // }
+    
     const sendComment = () => {
         socket.emit("send_message", {note: comment, email: user.email})
     }
@@ -231,9 +223,9 @@ const ShowCar = (props) => {
                         <Card.Text>
                             <p style={{ fontSize: '20px', fontWeight: 'bold' }} >Type: {car.type.toLowerCase()} </p>
                             <p style={{ fontSize: '20px', fontWeight: 'bold' }} > Description: {car.description} </p>
-                            <p style={{ fontSize: '20px', fontWeight: 'bold' }} > Max price: {car.buyout} </p>
+                            <p style={{ fontSize: '20px', fontWeight: 'bold' }} > Max price: ${car.buyout} </p>
                             <p style={{ fontSize: '20px', fontWeight: 'bold' }} > Year: {car.year} </p>
-                            <p style={{ fontSize: '20px', fontWeight: 'bold' }} > Current Bid: {currentBid} </p>
+                            <p style={{ fontSize: '20px', fontWeight: 'bold' }} > Current Bid: ${currentBid} </p>
                         </Card.Text>
                     </Card.Body>
                     <Card.Footer>

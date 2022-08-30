@@ -8,12 +8,12 @@ import { Container, Card, Button } from 'react-bootstrap'
 import LoadingScreen from '../shared/LoadingScreen'
 import { getOneCar, updateCar, removeCar } from '../../api/cars'
 import messages from '../shared/AutoDismissAlert/messages'
-// import EditItemModal from './EditModal'
+// import EditCarModal from './EditModal'
 import CarForm from '../shared/CarForm.js'
 import EditCarModal from './EditListingModal'
 
 
-// We need to get the item's id from the parameters
+// We need to get the car's id from the parameters
 // Then we need to make a request to the api
 // Then we need to display the results in this component
 
@@ -30,7 +30,7 @@ const MyCar = (props) => {
 
     const { user, msgAlert, updatedStockCar, triggerRefresh } = props
     console.log('user in props', user)
-    console.log('the item in showItem', car)
+    console.log('the car in showCar', car)
     // destructuring to get the id value from our route parameters
 
 
@@ -40,7 +40,7 @@ const MyCar = (props) => {
             .then(res => { return setCar(res.data.car), console.log("this is res.data.car", res.data.car) })
             .catch(err => {
                 msgAlert({
-                    heading: 'Error getting item',
+                    heading: 'Error getting car',
                     message: messages.getCarsFailure,
                     variant: 'danger'
                 })
@@ -49,7 +49,7 @@ const MyCar = (props) => {
             })
     }, [])
 
-    // here we'll declare a function that runs which will remove the item
+    // here we'll declare a function that runs which will remove the car
     // this function's promise chain should send a message, and then go somewhere
     // const removeTheCar = () => {
     //     removeCar(user, car._id)
@@ -66,7 +66,7 @@ const MyCar = (props) => {
     //         // on failure send a failure message
     //         .catch(err => {
     //             msgAlert({
-    //                 heading: 'Error removing item',
+    //                 heading: 'Error removing car',
     //                 message: messages.removeCarFailure,
     //                 variant: 'danger'
     //             })
@@ -88,7 +88,7 @@ const MyCar = (props) => {
             // on failure send a failure message
             .catch(err => {
                 msgAlert({
-                    heading: 'Error removing item',
+                    heading: 'Error removing car',
                     message: messages.removeCarsFailure,
                     variant: 'danger'
                 })
@@ -99,8 +99,8 @@ const MyCar = (props) => {
         return <LoadingScreen />
     }
 
-    //changeQuantity() declaring callback function for setting state of the item quantity
-    // will need the item to change the quantity of and the setter function passed through from props
+    //changeQuantity() declaring callback function for setting state of the car quantity
+    // will need the car to change the quantity of and the setter function passed through from props
     // call function before the set timeout and navigate to change quantity in state
     // do I want to make an api call to change the data in the db?
     // what kind of data do i need from the db?
@@ -123,15 +123,6 @@ const MyCar = (props) => {
 
 
 
-    // function availability() {
-    //     if (item.stock = 0) {
-    //         return (<p>Out of Stock Sorry</p>)
-    //     } else {
-    //         return (
-    //             <p>hi</p>
-    //         )
-    //     }
-    // }
 
 
     return (

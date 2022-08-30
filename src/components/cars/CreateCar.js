@@ -1,12 +1,12 @@
 import { useState } from 'react'
-// import items from api, which is going to be added later
+// import cars from api, which is going to be added later
 import{ createCar } from '../../api/cars'
 import { useNavigate } from 'react-router-dom'
 
-// import createItemSuccess and createItemFailure from '../shared/AutoDismissAlert/messages', which is going to be added later
+// import createCarSuccess and createCarFailure from '../shared/AutoDismissAlert/messages', which is going to be added later
 import { createCarSuccess, createCarFailure } from '../shared/AutoDismissAlert/messages'
 
-// import ItemForm from '../shared/ItemForm' 
+// import CarForm from '../shared/CarForm' 
 import CarForm from '../shared/CarForm'
 
 
@@ -27,7 +27,7 @@ const CreateCar = (props) => {
         type: '',
         stock: null,
     })
-    console.log('this is item in createCar', car)
+    console.log('this is car in createCar', car)
 
     const handleChange = (e) => {
         setCar(prevCar => {

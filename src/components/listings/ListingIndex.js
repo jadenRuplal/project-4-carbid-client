@@ -19,7 +19,7 @@ const ListingIndex = (props) => {
 
     const { msgAlert, user } = props
 
-    //console.log('Props in ItemIndex', props)
+    //console.log('Props in CarIndex', props)
 
     useEffect(() => {
 
@@ -52,7 +52,7 @@ const ListingIndex = (props) => {
     console.log("this is cars", cars)
     const myCars = cars.map((car, index) => (
         <Card style={{ width: '30%', margin: 5 }} key={index}>
-           <Card.Header style={{textAlign:'center'}}>
+           <Card.Header style={{textAlign: 'center', fontWeight: 'bold', fontSize: '25px'}}>
                  {car.make} {car.model}
            </Card.Header>
             <Card.Body>

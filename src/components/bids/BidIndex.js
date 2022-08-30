@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import LoadingScreen from '../shared/LoadingScreen'
 import { getMyBids } from '../../api/bid'
 import messages from '../shared/AutoDismissAlert/messages'
+import '../../css/index.css'
 
 //card container style
 const cardContainerStyle = {
@@ -19,7 +20,7 @@ const BidIndex = (props) => {
 
     const { msgAlert, user } = props
 
-    //console.log('Props in ItemIndex', props)
+    //console.log('Props in BidIndex', props)
 
     useEffect(() => {
 
@@ -52,11 +53,11 @@ const BidIndex = (props) => {
     console.log("this is cars", cars)
     const myCars = cars.map((car, index) => (
         <Card style={{ width: '30%', margin: 5 }} key={index}>
-           <Card.Header>
-                 Car: {index + 1}
+           <Card.Header style={{textAlign: 'center', fontWeight: 'bold', fontSize: '25px'}}>
+           {car.make}  {car.model}
            </Card.Header>
             <Card.Body>
-           <img src={car.image} alt={car.model}></img>
+           <img src={car.image} alt={car.model} class="image"></img>
             </Card.Body>
             <Card.Footer>
             </Card.Footer>

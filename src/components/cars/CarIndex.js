@@ -21,7 +21,7 @@ const CarIndex = (props) => {
 
     const { msgAlert } = props
 
-    //console.log('Props in ItemIndex', props)
+    //console.log('Props in BidIndex', props)
 
     useEffect(() => {
 
@@ -29,11 +29,11 @@ const CarIndex = (props) => {
             .then(res => setCars(res.data.cars))
             .catch(err => {
                 msgAlert({
-                    heading: 'Error Getting Items',
+                    heading: 'Error Getting Bids',
                     message: messages.getCarsFailure,
                     variant: 'danger',
                 })
-                // console.log("here is get all items", getAllCars())
+                // console.log("here is get all bids", getAllCars())
                 console.log(err)
                 setError(true)
             })
@@ -43,7 +43,7 @@ const CarIndex = (props) => {
         return <p>Error!</p>
     }
 
-    // If items haven't loaded yet
+    // If bids haven't loaded yet
     if (!cars) {
         return <LoadingScreen />
     } else if (cars.length === 0) {
@@ -52,14 +52,14 @@ const CarIndex = (props) => {
 
     const carCards = cars.map((car, index) => (
         <Card style={{ width: '30%', margin: 5 }} key={index}>
-            <Link to={`/cars/${car._id}`} style={{ textDecoration: 'none', color: 'black'}}><Card.Header>{car.year}  {car.make}  {car.model}</Card.Header></Link>
+            <Link to={`/cars/${car._id}`} style={{ textDecoration: 'none', color: 'black'}}><Card.Header style={{textAlign: 'center', fontWeight: 'bold', fontSize: '25px'}}>{car.year}  {car.make}  {car.model}</Card.Header></Link>
             <Card.Body >
                 <Link to={`/cars/${car._id}`}><img src={car.image} alt={car.model} class="image"></img></Link>
             </Card.Body>
             <Card.Footer>
                 <div>
                     <div>
-                        Bid: ${car.startingbid} Buynow: {car.buyout}
+                        Bid: ${car.startingbid} Buynow: ${car.buyout}
                     </div>
                    
                 </div>
