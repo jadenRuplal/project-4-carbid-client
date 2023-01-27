@@ -1,14 +1,14 @@
-let apiUrl
+let apiUrl;
 const apiUrls = {
-    // YOU MUST CHANGE PRODUCTION URL WHEN DEPLOYING
-	production: 'https://carbidsapi.herokuapp.com',
-	development: 'http://localhost:8000',
-}
+  // YOU MUST CHANGE PRODUCTION URL WHEN DEPLOYING
+  production: "https://smart-insidious-scar.glitch.me",
+  development: "https://smart-insidious-scar.glitch.me",
+};
 
-if (window.location.hostname === 'localhost') {
-	apiUrl = apiUrls.development
+if (window.location.hostname === "localhost") {
+  apiUrl = apiUrls.development;
 } else {
-	apiUrl = apiUrls.production
+  apiUrl = apiUrls.production;
 }
 
-export default apiUrl
+export default apiUrl;
