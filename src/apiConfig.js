@@ -1,8 +1,8 @@
 let apiUrl;
 const apiUrls = {
   // YOU MUST CHANGE PRODUCTION URL WHEN DEPLOYING
-  production: "https://smart-insidious-scar.glitch.me",
-  development: "https://smart-insidious-scar.glitch.me",
+  production: "https://carbids.onrender.com",
+  development: "https://carbids.onrender.com",
 };
 
 if (window.location.hostname === "localhost") {
